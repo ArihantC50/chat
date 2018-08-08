@@ -23,9 +23,10 @@ socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined'));
 //   createdAT: new Date().getTime()
 // });
 
-  socket.on('CreateMessage',(message)=>{
+  socket.on('CreateMessage',(message,callback)=>{
     console.log('CreateMessage',message);
     io.emit('newMessage',generateMessage(message.from,message.text));
+    callback('This is from server');
     // io.emit('newMessage',{
     //   from:message.from,
     //   text:message.text,
