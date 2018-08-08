@@ -2,7 +2,7 @@ const path = require('path');
 const http = require('http');
 const express  = require('express');
 const socketio = require('socket.io');
-const {generateMessage} = require('./utils/message');
+const {generateMessage,generateLocationMessage} = require('./utils/message');
 const publicpath = path.join(__dirname,'../public');
 const port = process.env.PORT || 3000;
 // console.log(__dirname + '/../public');
@@ -38,7 +38,9 @@ socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined'));
     //   createAT: new Date().getTime()
     // });
   });
-
+socket.on('createLocation',(coords) => {
+  io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude, coords.longitude));
+});
   socket.on('disconnect',() => {
     console.log('user was Disconnected');
   });
